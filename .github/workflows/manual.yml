@@ -54,6 +54,7 @@ jobs:
           python3 versiongen.py
       - name: Build RetroED2
         run: |
+          cd RetroEDv2
           mkdir build
           qmake -o build RetroEDv2.pro
           cd build
