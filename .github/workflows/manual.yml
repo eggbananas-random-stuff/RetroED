@@ -40,3 +40,38 @@ jobs:
       with:
         name: RetroED-win
         path: build/release/RetroED
+
+  linux-build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Setup Python
+      uses: actions/setup-python@v6
+      with:
+        python-version: '3.13'
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: '5.15.2'
+        cache: true
+        arch: 'gcc_64'
+    - name: Install dependacies
+      run: |
+        sudo apt-get update
+        sudo apt-get install build-essential python3.6 python3-pip libqt5svg5-dev qtbase5-dev qtchooser qt5-qmake qtbase5-dev-tools
+    - name: Run versiongen
+      working-directory: RetroEDv2
+      run: |
+        py -m pip install pytz
+        py versiongen.py $Env:GITHUB_SHA
+    - name: Build RetroED
+      working-directory: build
+      run: |
+        qmake ../RetroEDv2/RetroEDv2.pro -spec linux-g++ -config release "CONFIG+=qtquickcompiler" "ENV+=GITHUB_ACTION"
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: RetroED-linux
+        path: build/release/RetroED
