@@ -13,7 +13,7 @@ void RSDKv3::StageConfig::read(Reader &reader)
     palette.read(reader, 2 * 16);
 
     // Stage Objects
-    byte objectCount = reader.read<byte>();
+    int objectCount = reader.read<byte>();
     objects.clear();
 
     for (int o = 0; o < objectCount; ++o) {
