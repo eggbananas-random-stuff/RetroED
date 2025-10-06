@@ -16,7 +16,7 @@ void RSDKv1::StageConfig::read(Reader &reader)
     for (int o = 0; o < sheetCount; ++o) spriteSheets.append(reader.readString());
 
     // Stage Objects
-    byte objectCount = reader.read<byte>();
+    int objectCount = reader.read<byte>();
     objects.clear();
 
     for (int o = 0; o < objectCount; ++o) {

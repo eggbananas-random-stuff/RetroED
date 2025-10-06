@@ -27,7 +27,7 @@ void RSDKv4::StageConfig::read(Reader &reader)
     }
 
     // Stage Objects
-    byte objectCount = reader.read<byte>();
+    int objectCount = reader.read<byte>();
     objects.clear();
 
     for (int o = 0; o < objectCount; ++o) {
